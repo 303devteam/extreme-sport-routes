@@ -1,11 +1,12 @@
 import express from "express";
-import Member from '../models/Member.js'
+import MemberController from '../controllers/memberController.js';
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/", async (req, res) => {
-    const members = await Member.findAll()
-    res.json(members)
-})
+router.get("/", MemberController.getAllMembers);
+router.get("/member/:id", MemberController.getMemberById);
+router.post("/addmember", MemberController.addMember);
+router.put("/updatemember/:id", MemberController.updateMember);
+router.delete("/delmember/:id", MemberController.deleteMember);
 
-export default router
+export default router;

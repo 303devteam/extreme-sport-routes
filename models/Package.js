@@ -30,9 +30,13 @@ const Package = sequelize.define('Package', {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    periodOfDay: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    startPeriod: {
+        type: DataTypes.TIME,
+        allowNull: true,
+    },
+    endPeriod: {
+        type: DataTypes.TIME,
+        allowNull: true,
     },
 }, {
     tableName: 'packages',

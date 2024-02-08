@@ -21,6 +21,14 @@ const Member = sequelize.define('Member', {
     birthDay: {
         type: DataTypes.DATE,
         allowNull: false,
+    },
+    city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 },{
     tableName: 'members',
