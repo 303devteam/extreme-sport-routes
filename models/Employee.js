@@ -22,6 +22,18 @@ const Employee = sequelize.define('Employee', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    passwordHash: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 }, {
     tableName: 'employees',
     createdAt: false,
