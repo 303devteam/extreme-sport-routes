@@ -37,7 +37,12 @@ const MemberController = {
         const member = await Member.findByPk(req.params.id);
         await member.destroy();
         res.json({ message: "Member deleted" });
-    }
+    },
+
+   
+
+    
+    
 };
 
 export default MemberController;

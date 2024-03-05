@@ -78,7 +78,12 @@ const EmployeeController = {
                 return res.status(401).json({ error: 'Invalid credentials' });
             }
 
-            res.json(employee);
+            res.json({
+                id: employee.id,
+                name: employee.firstName + ' ' + employee.lastName,
+                email: employee.email,
+                role: employee.userType
+            });
         } catch (error) {
             res.status(500).json({ error: 'Internal Server Error' });
         }

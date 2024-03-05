@@ -3,6 +3,7 @@ import cors from "cors"
 import memberRoutes from './member/memberRoutes.js'
 import employeeRoutes from './member/employeeRoutes.js'
 import packageRoutes from './member/packageRoutes.js'
+import membershipRoutes from './member/membershipRoutes.js'
 import sequelize from "./models/seq.js"
 
 const app = express()
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/members", memberRoutes)
 app.use("/employees", employeeRoutes)
 app.use("/packages", packageRoutes)
+app.use("/memberships", membershipRoutes)
 
 app.get("/", async (req, res) => {
     res.send("Hello World")
