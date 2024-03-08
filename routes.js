@@ -1,9 +1,9 @@
 import express from "express"
 import cors from "cors"
-import memberRoutes from './member/memberRoutes.js'
-import employeeRoutes from './member/employeeRoutes.js'
-import packageRoutes from './member/packageRoutes.js'
-import membershipRoutes from './member/membershipRoutes.js'
+import memberRoutes from './routes/memberRoutes.js'
+import employeeRoutes from './routes/employeeRoutes.js'
+import packageRoutes from './routes/packageRoutes.js'
+import membershipRoutes from './routes/membershipRoutes.js'
 import sequelize from "./models/seq.js"
 
 const app = express()

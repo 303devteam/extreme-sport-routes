@@ -38,11 +38,6 @@ const MemberController = {
         await member.destroy();
         res.json({ message: "Member deleted" });
     },
-
-   
-
-    
-    
 };
 
 export default MemberController;
