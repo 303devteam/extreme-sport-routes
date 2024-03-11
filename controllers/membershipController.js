@@ -75,13 +75,20 @@ const MembershipController = {
 
             const currentDate = new Date();
             const endDate = new Date(membership.endDate);
+            const startDate = new Date(membership.startDate)
 
             if (endDate < currentDate) {
-               
+
+              
                 const newEndDate = new Date(endDate);
                 newEndDate.setDate(newEndDate.getDate() + membership.numberOfSessions);
-                await membership.update({ endDate: newEndDate });
-                return res.json({ message: 'Membership extended', newEndDate });
+
+                const newStartDate = new Date();
+
+                
+                await membership.update({ startDate: newStartDate, endDate: newEndDate });
+
+                return res.json({ message: 'Membership extended', startDate: newStartDate, endDate: newEndDate });
             }
           
 
