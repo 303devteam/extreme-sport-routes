@@ -14,6 +14,8 @@ const MembershipController = {
     addMembership: async (req, res) => {
         try {
             const membership = await Membership.create(req.body);
+            await Payment.create({ paymentDate: new Date(), membershipId: membership.id });
+
             res.json(membership);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -87,6 +89,8 @@ const MembershipController = {
 
                 
                 await membership.update({ startDate: newStartDate, endDate: newEndDate });
+                await Payment.create({ paymentDate: currentDate, membershipId: membership.id });
+
 
                 return res.json({ message: 'Membership extended', startDate: newStartDate, endDate: newEndDate });
             }
