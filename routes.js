@@ -4,7 +4,9 @@ import memberRoutes from './routes/memberRoutes.js'
 import employeeRoutes from './routes/employeeRoutes.js'
 import packageRoutes from './routes/packageRoutes.js'
 import membershipRoutes from './routes/membershipRoutes.js'
+import paymentRoutes from './routes/paymentRoutes.js'
 import sequelize from "./models/seq.js"
+
 
 const app = express()
 const port = process.env.PORT
@@ -17,6 +19,7 @@ app.use("/members", memberRoutes)
 app.use("/employees", employeeRoutes)
 app.use("/packages", packageRoutes)
 app.use("/memberships", membershipRoutes)
+app.use("/payments", paymentRoutes)
 
 app.get("/", async (req, res) => {
     res.send("Hello World")
