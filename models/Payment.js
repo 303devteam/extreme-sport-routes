@@ -5,6 +5,10 @@ const Payment = sequelize.define('Payment', {
     paymentDate: {
         type: DataTypes.DATE,
         allowNull: false,
+    },
+    membershipId: {
+        type: DataTypes.STRING,
+        allowNull: false,
     }
 }, {
     tableName: 'payments',

@@ -26,6 +26,9 @@ const Membership = sequelize.define('Membership', {
     numberOfSessions: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    lastCheckin: {
+        type: DataTypes.DATE,
     }
 },{
     tableName: 'memberships',
