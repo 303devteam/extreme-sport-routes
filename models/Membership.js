@@ -27,8 +27,8 @@ const Membership = sequelize.define('Membership', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    lastCheckin: {
-        type: DataTypes.DATE,
+    present: {
+        type: DataTypes.BOOLEAN
     }
 },{
     tableName: 'memberships',

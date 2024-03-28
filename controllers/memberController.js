@@ -25,14 +25,84 @@ const MemberController = {
                     ]
                 }
             ],
-            limit: 10,
-            offset: 0
+            limit: 20,
+            offset: parseInt(req.params.offset) || 0
         });
-        res.json(members);
+
+        const count = await Member.count();
+        res.json({members, count});
+    },
+
+    getPresentMembers: async (req, res) => {
+        const members = await Member.findAll({
+            include: [
+                {
+                    model: Membership,
+                    where: { present: true },
+                    include: [
+                        {
+                            model: Package,
+                        },
+                        {
+                            model: Payment,
+                        }
+                    ]
+                }
+            ],
+            limit: 20,
+            offset: parseInt(req.params.offset) || 0
+        });
+
+        const count = await Member.count({
+            distinct: true,
+            include: [
+                {
+                    model: Membership,
+                    where: { present: true },
+                    
+                }
+            ],
+        });
+        res.json({members, count});
     },
     
     getMemberById: async (req, res) => {
-        const member = await Member.findByPk(req.params.id);
+        const member = await Member.findOne({
+            where: { id: req.params.id },
+            include: [
+                {
+                    model: Membership,
+                    include: [
+                        {
+                            model: Package,
+                        },
+                        {
+                            model: Payment,
+                        }
+                    ]
+                }
+            ]
+        });
+        res.json(member);
+    },
+
+    getByFullName: async (req, res) => {
+        const member = await Member.findOne({
+            where: { firstName: req.params.firstName, lastName: req.params.lastName},
+            include: [
+                {
+                    model: Membership,
+                    include: [
+                        {
+                            model: Package,
+                        },
+                        {
+                            model: Payment,
+                        }
+                    ]
+                }
+            ]
+        });
         res.json(member);
     },
 

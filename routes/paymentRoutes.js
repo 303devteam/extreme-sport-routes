@@ -4,7 +4,8 @@ import PaymentController from '../controllers/paymentController.js';
 const router = express.Router();
 
 router.get("/", PaymentController.getAllPayments); 
-router.get("/payment/:id", PaymentController.getPaymentById); 
+router.get("/payment/:id", PaymentController.getPaymentById);
+router.get('/paymentsByDate/:startDate/:endDate', PaymentController.getPaymentsByDate);
 router.post("/addpayment", PaymentController.addPayment); 
 router.put("/payment/:id", PaymentController.updatePayment); 
 router.delete("/payment/:id", PaymentController.deletePayment); 

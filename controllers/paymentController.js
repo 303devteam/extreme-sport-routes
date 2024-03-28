@@ -1,4 +1,17 @@
 import Payment from '../models/Payment.js';
+import Member from '../models/Member.js';
+import Membership from '../models/Membership.js';
+import Package from '../models/Package.js';
+import { Op } from 'sequelize';
+
+Member.hasMany(Membership);
+Membership.belongsTo(Member);
+
+Package.hasMany(Membership);
+Membership.belongsTo(Package);
+
+Membership.hasMany(Payment);
+Payment.belongsTo(Membership);
 
 const PaymentController = {
     getAllPayments: async (req, res) => {
@@ -21,6 +34,35 @@ const PaymentController = {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     },
+
+    getPaymentsByDate: async (req, res) => {
+        try {
+            const payments = await Payment.findAll({
+                include: [
+                    {
+                        model: Membership,
+                        include: [
+                            {
+                                model: Package,
+                            },
+                            {
+                                model: Member,
+                            }
+                        ]
+                    }
+                ],
+                where: {
+                    paymentDate: {
+                        [Op.between]: [req.params.startDate, req.params.endDate]
+                    }
+                }
+            });
+            res.json(payments);
+        } catch (error) {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },
+    
 
     addPayment: async (req, res) => {
         try {

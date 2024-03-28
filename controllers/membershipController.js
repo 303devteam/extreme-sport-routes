@@ -73,7 +73,7 @@ const MembershipController = {
                         await membership.update({ endDate: newEndDate, startDate: currentDate });
                     }
 
-                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id });
+                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id, visible: false });
 
                     res.status(200).json({ message: 'Membership extended' });
                 } else {
@@ -86,7 +86,7 @@ const MembershipController = {
                         await membership.update({ endDate: newEndDate, startDate: currentDate });
                     }
 
-                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id });
+                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id, visible: false });
 
                     res.status(200).json({ message: 'Membership extended' });
                 }
@@ -109,18 +109,23 @@ const MembershipController = {
             const startDate = new Date(membership.startDate);
             const endDate = new Date(membership.endDate);
 
-            if(membership.numberOfSessions > 0 || membership.numberOfSessions < 0) {
-                if (startDate <= currentDate && currentDate <= endDate) {
-                    if(membership.numberOfSessions > 0) {
-                        await membership.update({ numberOfSessions: membership.numberOfSessions - 1});
+            if(membership.present) {
+                await membership.update({ present: false });
+                return res.status(200).json({ message: 'Check-out successful' });
+            } else {
+                if(membership.numberOfSessions > 0 || membership.numberOfSessions < 0) {
+                    if (startDate <= currentDate && currentDate <= endDate) {
+                        if(membership.numberOfSessions > 0) {
+                            await membership.update({ numberOfSessions: membership.numberOfSessions - 1});
+                        }
+                        await membership.update({ present: true });
+                        return res.status(200).json({ message: 'Check-in successful' });
+                    } else {
+                        return res.status(400).json({ message: 'Check-in failed' });
                     }
-                    await membership.update({ lastCheckin: new Date() });
-                    return res.status(200).json({ message: 'Check-in successful' });
                 } else {
                     return res.status(400).json({ message: 'Check-in failed' });
                 }
-            } else {
-                return res.status(400).json({ message: 'Check-in failed' });
             }
         } catch (error) {
             console.error('Error checking in:', error);
