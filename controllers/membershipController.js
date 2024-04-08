@@ -68,12 +68,12 @@ const MembershipController = {
                     newEndDate.setDate(newEndDate.getDate() + 30)
 
                     if(membership.numberOfSessions == 0) {
-                        await membership.update({ endDate: newEndDate, startDate: currentDate, numberOfSessions: _package.numberOfSessions });
+                        await membership.update({ endDate: newEndDate, startDate: new Date(), numberOfSessions: _package.numberOfSessions });
                     } else {
-                        await membership.update({ endDate: newEndDate, startDate: currentDate });
+                        await membership.update({ endDate: newEndDate, startDate: new Date() });
                     }
 
-                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id, visible: false });
+                    Payment.create({ paymentDate: new Date(), membershipId: req.params.id, visible: true });
 
                     res.status(200).json({ message: 'Membership extended' });
                 } else {
@@ -81,9 +81,9 @@ const MembershipController = {
                     newEndDate.setDate(newEndDate.getDate() + 7)
 
                     if(membership.numberOfSessions == 0) {
-                        await membership.update({ endDate: newEndDate, startDate: currentDate, numberOfSessions: _package.numberOfSessions });
+                        await membership.update({ endDate: newEndDate, startDate: new Date(), numberOfSessions: _package.numberOfSessions });
                     } else {
-                        await membership.update({ endDate: newEndDate, startDate: currentDate });
+                        await membership.update({ endDate: newEndDate, startDate: new Date() });
                     }
 
                     Payment.create({ paymentDate: new Date(), membershipId: req.params.id, visible: false });
@@ -108,8 +108,9 @@ const MembershipController = {
             const currentDate = new Date();
             const startDate = new Date(membership.startDate);
             const endDate = new Date(membership.endDate);
+            const lastCheckin = new Date(membership.lastCheckin);
 
-            if(membership.present) {
+            if(membership.present && lastCheckin.getDate() == currentDate.getDate() && lastCheckin.getMonth() == currentDate.getMonth() && lastCheckin.getFullYear() == currentDate.getFullYear()){
                 await membership.update({ present: false });
                 return res.status(200).json({ message: 'Check-out successful' });
             } else {
@@ -118,7 +119,7 @@ const MembershipController = {
                         if(membership.numberOfSessions > 0) {
                             await membership.update({ numberOfSessions: membership.numberOfSessions - 1});
                         }
-                        await membership.update({ present: true });
+                        await membership.update({ present: true, lastCheckin: currentDate});
                         return res.status(200).json({ message: 'Check-in successful' });
                     } else {
                         return res.status(400).json({ message: 'Check-in failed' });

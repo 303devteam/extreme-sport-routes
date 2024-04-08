@@ -16,11 +16,11 @@ const Membership = sequelize.define('Membership', {
         allowNull: false
     },
     startDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     endDate: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     numberOfSessions: {
@@ -29,6 +29,9 @@ const Membership = sequelize.define('Membership', {
     },
     present: {
         type: DataTypes.BOOLEAN
+    },
+    lastCheckin: {
+        type: DataTypes.DATEONLY
     }
 },{
     tableName: 'memberships',

@@ -38,7 +38,7 @@ const MemberController = {
             include: [
                 {
                     model: Membership,
-                    where: { present: true },
+                    where: { present: true, lastCheckin: new Date() },
                     include: [
                         {
                             model: Package,

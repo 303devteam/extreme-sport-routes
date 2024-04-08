@@ -19,7 +19,7 @@ const Member = sequelize.define('Member', {
         allowNull: false,
     },
     birthDay: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     city: {
