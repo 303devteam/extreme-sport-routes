@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm --env-file=.env routes.js",
+    "start": "node --env-file=.env routes.js",
     "dev": "nodemon --env-file=.env routes.js"
   },
   "author": "",
@@ -20,5 +20,12 @@
     "nodemon": "^3.0.3",
     "sequelize": "^6.36.0",
     "sequelize-cli": "^6.6.2"
+  },
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "targets": [
+      "node12-win-x64",
+      "node12-macos-x64"
+    ]
   }
 }
